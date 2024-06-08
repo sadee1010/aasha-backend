@@ -1,5 +1,6 @@
 package com.example.aasha.dto;
 
+import com.example.aasha.entity.Booking;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,4 +17,5 @@ public class VolunteerDTO {
     private String mobileNo;
     private String nationality;
     private String email;
+    private BookingDTO booking;
 }

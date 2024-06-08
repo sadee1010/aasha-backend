@@ -1,37 +1,30 @@
 package com.example.aasha.controler;
 
 import com.example.aasha.dto.ProjectCategoryDTO;
-import com.example.aasha.dto.ResponseDTO;
-import com.example.aasha.service.ProjectCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.aasha.entity.ProjectCategory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/projectcategory")
-@CrossOrigin
-public class ProjectCategoryController {
-    @Autowired
-    ProjectCategoryService projectCategoryService;
+import java.util.List;
 
-    @PostMapping ("/save")
-    public ResponseEntity saveProjectCategory(@RequestBody ProjectCategoryDTO projectCategoryDTO){
-        ResponseDTO responseDTO = projectCategoryService.saveProjectCategory(projectCategoryDTO);
-        System.out.println(responseDTO.getContent());
-        return new ResponseEntity(responseDTO,responseDTO.getHttpStatus());
-    }
+@Service
+@CrossOrigin(origins = "*")
+public interface ProjectCategoryController {
 
-    @GetMapping ( "/get")
-    public ResponseEntity getProjectCategory (){
-        ResponseDTO responseDTO = projectCategoryService.getProjectCategory();
-        return new ResponseEntity(responseDTO, responseDTO.getHttpStatus());
-    }
+    @GetMapping("/projectcategory")
+    ResponseEntity<List<ProjectCategoryDTO>> getAllProjectCategories();
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteProjectCategory(@PathVariable Long id){
-        ResponseDTO responseDTO = projectCategoryService.deleteProjectCategory(id);
-        return new ResponseEntity(responseDTO,responseDTO.getHttpStatus());
-    }
+    @GetMapping("/projectcategory/{id}")
+    ResponseEntity<ProjectCategoryDTO> getProjectCategoryById(@PathVariable Long id);
 
+    @PostMapping("/projectcategory")
+    ResponseEntity<ProjectCategoryDTO> saveProjectCategory(@RequestBody ProjectCategory projectCategory);
+
+    @PutMapping("/projectcategory/{id}")
+    ResponseEntity<ProjectCategoryDTO> updateProjectCategory(@PathVariable Long id, @RequestBody ProjectCategory projectCategory);
+
+    @DeleteMapping("/projectcategory/{id}")
+    ResponseEntity<Void> deleteProjectCategory(@PathVariable Long id);
 
 }

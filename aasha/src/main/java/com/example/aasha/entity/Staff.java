@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table (name = "Staff")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,24 +19,37 @@ public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sid;
+    @Column
     private String sname;
+    @Column
     private String address;
+    @Column
     private String homePhone;
+    @Column
     private String mobilePhone;
+    @Column
     private String nicno;
+    @Column
     private String semail;
+    @Column
     private LocalDate sdob;
+    @Column
     private String maritalState;
+    @Column
     private String spouseName;
+    @Column
     private String spousePhone;
+    @Column
     private Boolean isMale;
+    @Column
     private String bloodGroup;
+    @Column
     private String allergicTo;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "accountNo")
     @JsonManagedReference
-    private StaffBank staffbank;
+    private StaffBank staffBank;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "sepId")

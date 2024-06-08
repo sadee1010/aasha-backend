@@ -60,12 +60,12 @@ public class StaffServiceImpl implements StaffService {
         existingStaff.setAllergicTo(updatedStaff.getAllergicTo());
 
         // Update staffBank if it is provided
-        if (updatedStaff.getStaffbank() != null) {
-            StaffBank existingStaffBank = existingStaff.getStaffbank();
-            StaffBank updatedStaffBank = updatedStaff.getStaffbank();
+        if (updatedStaff.getStaffBank() != null) {
+            StaffBank existingStaffBank = existingStaff.getStaffBank();
+            StaffBank updatedStaffBank = updatedStaff.getStaffBank();
 
             if (existingStaffBank == null) {
-                existingStaff.setStaffbank(updatedStaffBank);
+                existingStaff.setStaffBank(updatedStaffBank);
                 updatedStaffBank.setStaff(existingStaff);
             } else {
                 existingStaffBank.setAccountNo(updatedStaffBank.getAccountNo());
@@ -90,21 +90,26 @@ public class StaffServiceImpl implements StaffService {
             }
         }
 
-//        if (updatedStaff.getStaffJob() != null) {
-//            StaffJob existingStaffJob = existingStaff.getStaffJob();
-//            StaffJob updatedStaffJob = updatedStaff.getStaffJob();
-//
-//            if (existingStaffJob == null) {
-//                existingStaff.setStaffJob(updatedStaffJob);
-//                updatedStaffJob.setStaff(existingStaff);
-//            } else {
-//                existingStaffJob.setType (updatedStaffJob.getType());
-//                existingStaffJob.setOfficialEmail(updatedStaffJob.getOfficialEmail());
-//                existingStaffJob.setStartDate(updatedStaffJob.getStartDate());
-//                existingStaffJob.setStartSalary(updatedStaffJob.getStartSalary());
-//                existingStaffJob.setWorkPhone(updatedStaffJob.getWorkPhone());
-//
-//            }
+        if (updatedStaff.getStaffJob() != null) {
+            StaffJob existingStaffJob = existingStaff.getStaffJob();
+            StaffJob updatedStaffJob = updatedStaff.getStaffJob();
+
+            if (existingStaffJob == null) {
+                existingStaff.setStaffJob(updatedStaffJob);
+                updatedStaffJob.setStaff(existingStaff);
+            } else {
+                existingStaffJob.setType(updatedStaffJob.getType());
+                existingStaffJob.setOfficialEmail(updatedStaffJob.getOfficialEmail());
+                existingStaffJob.setStartDate(updatedStaffJob.getStartDate());
+                existingStaffJob.setStartSalary(updatedStaffJob.getStartSalary());
+                existingStaffJob.setWorkPhone(updatedStaffJob.getWorkPhone());
+
+            }
+        }
+
+        if (updatedStaff.getJobRole() != null) {
+            existingStaff.setJobRole(updatedStaff.getJobRole());
+        }
 
 
         // Save the updated staff entity back to the database
@@ -134,8 +139,8 @@ public class StaffServiceImpl implements StaffService {
         staffDTO.setBloodGroup(staff.getBloodGroup());
         staffDTO.setAllergicTo(staff.getAllergicTo());
 
-        if (staff.getStaffbank() != null) {
-            StaffBank staffBank = staff.getStaffbank();
+        if (staff.getStaffBank() != null) {
+            StaffBank staffBank = staff.getStaffBank();
             StaffBankDTO staffBankDTO = new StaffBankDTO();
             staffBankDTO.setBanker(staffBank.getBanker());
             staffBankDTO.setBranch(staffBank.getBranch());

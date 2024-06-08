@@ -7,16 +7,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table (name = "Staff Bank")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class StaffBank {
     @Id
     private String accountNo;
+    @Column
     private String banker;
+    @Column
     private String branch;
+    @Column
     private String accountName;
-    @OneToOne(mappedBy = "staffbank", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "staffBank", fetch = FetchType.LAZY)
     @JsonBackReference
     private Staff staff;
 

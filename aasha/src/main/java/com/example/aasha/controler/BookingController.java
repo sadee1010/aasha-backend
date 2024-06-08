@@ -1,5 +1,6 @@
 package com.example.aasha.controler;
 
+import com.example.aasha.dto.BookingDTO;
 import com.example.aasha.entity.Booking;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,15 +13,18 @@ import java.util.List;
 public interface BookingController {
 
     @GetMapping("/bookings")
-    ResponseEntity<List<Booking>> getAllBookings();
+    ResponseEntity<List<BookingDTO>> getAllBookings();
 
     @GetMapping("/bookings/{id}")
-    ResponseEntity<Booking> getBookingById(@PathVariable Long id);
+    ResponseEntity<BookingDTO> getBookingById(@PathVariable Long id);
 
     @PostMapping("/bookings")
-    ResponseEntity<Booking> saveBooking(@RequestBody Booking bookings);
+    ResponseEntity<BookingDTO> saveBooking(@RequestBody Booking bookings);
 
     @PutMapping("bookings/{id}")
-    ResponseEntity<Booking> updateBooking(@PathVariable Long id, @RequestBody Booking bookings);
+    ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody Booking bookings);
+
+    @DeleteMapping("bookings/{id}")
+    ResponseEntity<Void> deleteBooking(@PathVariable Long id);
 
 }

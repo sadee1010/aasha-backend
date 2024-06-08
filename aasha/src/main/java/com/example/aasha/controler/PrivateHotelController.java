@@ -1,36 +1,29 @@
 package com.example.aasha.controler;
 
 import com.example.aasha.dto.PrivateHotelDTO;
-import com.example.aasha.dto.ResponseDTO;
-import com.example.aasha.service.PrivateHotelService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.aasha.entity.PrivateHotel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping ( "/api/privatehotels")
-@CrossOrigin
-public class PrivateHotelController {
-    @Autowired
-    PrivateHotelService privateHotelService;
+import java.util.List;
 
+@Service
+@CrossOrigin(origins = "*")
+public interface PrivateHotelController {
 
-    @PostMapping("/save")
-    public ResponseEntity savePrivateHotel(@RequestBody PrivateHotelDTO privateHotelDTO){
-        ResponseDTO responseDTO =  privateHotelService.savePrivateHotel(privateHotelDTO);
-        System.out.println(responseDTO.getContent());
-        return new ResponseEntity(responseDTO,responseDTO.getHttpStatus());
-    }
+    @GetMapping("/privatehotels")
+    ResponseEntity<List<PrivateHotelDTO>> getAllPrivateHotels();
 
-    @GetMapping( "/get")
-    public ResponseEntity getPrivateHotel (){
-        ResponseDTO responseDTO = privateHotelService.getPrivateHotel();
-        return new ResponseEntity(responseDTO,responseDTO.getHttpStatus());
-    }
+    @GetMapping("/privatehotels/{id}")
+    ResponseEntity<PrivateHotelDTO> getPrivateHotelById(@PathVariable Long id);
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deletePrivateHotel(@PathVariable Long id){
-        ResponseDTO responseDTO = privateHotelService.deletePrivateHotel(id);
-        return new ResponseEntity(responseDTO,responseDTO.getHttpStatus());
-    }
+    @PostMapping("/privatehotels")
+    ResponseEntity<PrivateHotelDTO> savePrivateHotel(@RequestBody PrivateHotel privateHotel);
+
+    @PutMapping("/privatehotels/{id}")
+    ResponseEntity<PrivateHotelDTO> updatePrivateHotel(@PathVariable Long id, @RequestBody PrivateHotel privateHotel);
+
+    @DeleteMapping("/privatehotels/{id}")
+    ResponseEntity<Void> deletePrivateHotel(@PathVariable Long id);
 }

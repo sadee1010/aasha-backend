@@ -8,7 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-@Entity
+
+@Table(name = "ProjectBooking")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -19,14 +20,13 @@ public class ProjectBooking {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "prId")
-    @JsonBackReference
     private Project project;
-
-    private LocalDate startDate;
-    private LocalDate endDate;
+    @Column
+    private LocalDate pstartDate;
+    @Column
+    private LocalDate pendDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bookingId")
-    @JsonBackReference
-    private Booking booking;
+    private Booking bookings;
 }

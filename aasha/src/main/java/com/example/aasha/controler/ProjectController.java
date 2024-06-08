@@ -1,35 +1,30 @@
 package com.example.aasha.controler;
 
 import com.example.aasha.dto.ProjectDTO;
-import com.example.aasha.dto.ResponseDTO;
-import com.example.aasha.service.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.aasha.entity.Project;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping ( "/api/projects")
-@CrossOrigin
-public class ProjectController {
-    @Autowired
-    ProjectService projectService;
+import java.util.List;
 
-    @PostMapping("/save")
-    public ResponseEntity saveProject(@RequestBody ProjectDTO projectDTO){
-        ResponseDTO responseDTO = projectService.saveProject(projectDTO);
-        System.out.println(responseDTO.getContent());
-        return new ResponseEntity(responseDTO,responseDTO.getHttpStatus());
-    }
+@Service
+@CrossOrigin(origins = "*")
+public interface ProjectController {
 
-    @GetMapping ( "/get")
-    public ResponseEntity getProject (){
-        ResponseDTO responseDTO = projectService.getProject();
-        return new ResponseEntity(responseDTO, responseDTO.getHttpStatus());
-    }
+    @GetMapping("/project")
+    ResponseEntity<List<ProjectDTO>> getAllProjects();
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteProject(@PathVariable Long id){
-        ResponseDTO responseDTO = projectService.deleteProject(id);
-        return new ResponseEntity(responseDTO,responseDTO.getHttpStatus());
-    }
+    @GetMapping("/project/{id}")
+    ResponseEntity<ProjectDTO> getProjectById(@PathVariable Long id);
+
+    @PostMapping("/project")
+    ResponseEntity<ProjectDTO> saveProject(@RequestBody Project project);
+
+    @PutMapping("/project/{id}")
+    ResponseEntity<ProjectDTO> updateProject(@PathVariable Long id, @RequestBody Project project);
+
+    @DeleteMapping("/project/{id}")
+    ResponseEntity<Void> deleteProject(@PathVariable Long id);
+
 }

@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class PrivateHotelDTO {
     private Long phId;
     private String phName;
+
 }

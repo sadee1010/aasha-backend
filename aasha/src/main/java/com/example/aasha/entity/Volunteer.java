@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
+@Table (name = "Volunteer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,20 +18,23 @@ public class Volunteer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column
     private String firstName;
+    @Column
     private String lastName;
+    @Column
     private LocalDate dob;
+    @Column
     private Boolean isMale;
+    @Column
     private String mobileNo;
+    @Column
     private String nationality;
+    @Column
     private String email;
 
     @OneToOne(mappedBy = "volunteer", fetch = FetchType.LAZY)
     @JsonBackReference
     private Booking booking;
-
-
-
 
 }

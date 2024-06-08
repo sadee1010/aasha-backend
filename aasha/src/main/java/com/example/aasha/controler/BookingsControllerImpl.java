@@ -1,5 +1,6 @@
 package com.example.aasha.controler;
 
+import com.example.aasha.dto.BookingDTO;
 import com.example.aasha.entity.Booking;
 import com.example.aasha.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class BookingsControllerImpl implements BookingController {
@@ -22,26 +24,38 @@ public class BookingsControllerImpl implements BookingController {
     }
 
     @Override
-    public ResponseEntity<List<Booking>> getAllBookings() {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingService.getAllBookings());
+    public ResponseEntity<List<BookingDTO>> getAllBookings() {
+        List<BookingDTO> bookingDTOs = bookingService.getAllBookings()
+                .stream()
+                .map(bookingService::convertToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(bookingDTOs);
     }
 
     @Override
-    public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
-        Booking booking = bookingService.getBookingById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(booking);
+    public ResponseEntity<BookingDTO> getBookingById(@PathVariable Long id) {
+        BookingDTO bookingDTO = bookingService.convertToDTO(bookingService.getBookingById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(bookingDTO);
     }
 
     @Override
-    public ResponseEntity<Booking> saveBooking(@RequestBody Booking booking) {
+    public ResponseEntity<BookingDTO> saveBooking(@RequestBody Booking booking) {
         Booking newBooking = bookingService.saveBooking(booking);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newBooking);
+        BookingDTO newBookingDTO = bookingService.convertToDTO(newBooking);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newBookingDTO);
     }
 
     @Override
-    public ResponseEntity<Booking> updateBooking(@PathVariable Long id, @RequestBody Booking booking) {
+    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody Booking booking) {
         Booking updatedBooking = bookingService.updateBooking(id, booking);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedBooking);
+        BookingDTO updatedBookingDTO = bookingService.convertToDTO(updatedBooking);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedBookingDTO);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
 }

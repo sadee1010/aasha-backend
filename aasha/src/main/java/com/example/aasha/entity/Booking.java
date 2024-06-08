@@ -1,5 +1,6 @@
 package com.example.aasha.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -11,18 +12,23 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "Booking")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
 
+    @Column
     private LocalDate bookingDate;
+    @Column
     private LocalDate startDate;
+    @Column
     private LocalDate endDate;
+    @Column
     private String bookingStatus;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -30,7 +36,17 @@ public class Booking {
     @JsonManagedReference
     private Volunteer volunteer;
 
-    @OneToMany(mappedBy = "booking", fetch = FetchType.EAGER)
-    private List<ProjectBooking> projectBookings;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pid")
+    private Partner partner;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rid")
+    private Room room;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "prId")
+    private Project project;
+
 
 }

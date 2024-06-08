@@ -33,4 +33,5 @@ public class StaffDTO {
     private StaffBankDTO staffBank;
     private StaffEmergencyDTO staffEmergency;
     private StaffJobDTO staffJob;
+
 }

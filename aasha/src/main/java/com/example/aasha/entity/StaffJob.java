@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "Staff Job")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -21,25 +22,19 @@ public class StaffJob {
     @JsonBackReference
     private Staff staff;
 
-
-
-//    @OneToOne
-//    @JoinColumn(name = "Name", referencedColumnName = "sid")
-//    private Staff staff;
-//    @OneToOne
-//    @JoinColumn (name = "Designation", referencedColumnName = "jid")
-//    private JobRole designation;
-
+    @Column
     private LocalDate startDate;
+    @Column
     private Integer startSalary;
+    @Column
     private String officialEmail;
+    @Column
     private String workPhone;
+    @Column
     private String type;
 
 //    @OneToOne
 //    @JoinColumn(name = "Reporting To", referencedColumnName = "sid")
 //    private Staff reportingTo;
-
-
 
 }

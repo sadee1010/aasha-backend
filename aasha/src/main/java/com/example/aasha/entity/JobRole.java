@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
+@Table(name = "Job Role")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,6 +19,7 @@ public class JobRole {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long jid;
+    @Column
     private String jname;
     @OneToMany(mappedBy = "jobRole", fetch = FetchType.EAGER)
     @JsonBackReference

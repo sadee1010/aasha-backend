@@ -14,11 +14,10 @@ import java.time.LocalDate;
 public class StaffJobDTO {
     private Long sjid;
     private StaffDTO staff;
-    private JobRoleDTO designation;
     private LocalDate startDate;
     private Integer startSalary;
     private String officialEmail;
     private String workPhone;
     private String type;
-    private StaffDTO reportingTo;
+
 }
