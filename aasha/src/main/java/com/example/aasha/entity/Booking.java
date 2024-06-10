@@ -45,6 +45,10 @@ public class Booking {
     private Room room;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "phId")
+    private PrivateHotel privateHotel;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "prId")
     private Project project;
 

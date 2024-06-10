@@ -20,5 +20,4 @@ public interface BookingService {
 
     public BookingDTO convertToDTO(Booking booking);
 
-
 }

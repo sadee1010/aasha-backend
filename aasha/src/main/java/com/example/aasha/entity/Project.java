@@ -21,6 +21,8 @@ public class Project {
     private Long prId;
     @Column
     private String prName;
+    @Column
+    private int capacity;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "category")

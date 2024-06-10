@@ -44,6 +44,7 @@ public class ProjectServiceImpl implements ProjectService{
                 .orElseThrow(() -> new NoSuchElementException("Project not found with id " + id));
 
         existingProject.setPrName(updatedProject.getPrName());
+        existingProject.setCapacity(updatedProject.getCapacity());
 
         if (updatedProject.getProjectCategory() != null) {
             ProjectCategory existingProjectCategory = existingProject.getProjectCategory();
@@ -69,6 +70,7 @@ public class ProjectServiceImpl implements ProjectService{
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setPrId(project.getPrId());
         projectDTO.setPrName(project.getPrName());
+        projectDTO.setCapacity(project.getCapacity());
 
         ProjectCategoryDTO projectCategoryDTO = new ProjectCategoryDTO();
         projectCategoryDTO.setPcId(project.getProjectCategory().getPcId());
@@ -93,32 +95,47 @@ public class ProjectServiceImpl implements ProjectService{
         bookingDTO.setEndDate(booking.getEndDate());
         bookingDTO.setBookingStatus(booking.getBookingStatus());
 
-        VolunteerDTO volunteerDTO = new VolunteerDTO();
-        volunteerDTO.setId(booking.getVolunteer().getId());
-        volunteerDTO.setFirstName(booking.getVolunteer().getFirstName());
-        volunteerDTO.setLastName(booking.getVolunteer().getLastName());
-        volunteerDTO.setEmail(booking.getVolunteer().getEmail());
-        volunteerDTO.setDob(booking.getVolunteer().getDob());
-        volunteerDTO.setIsMale(booking.getVolunteer().getIsMale());
-        volunteerDTO.setMobileNo(booking.getVolunteer().getMobileNo());
-        volunteerDTO.setNationality(booking.getVolunteer().getNationality());
-        bookingDTO.setVolunteer(volunteerDTO);
+        if (booking.getVolunteer() != null) {
+            VolunteerDTO volunteerDTO = new VolunteerDTO();
+            volunteerDTO.setId(booking.getVolunteer().getId());
+            volunteerDTO.setFirstName(booking.getVolunteer().getFirstName());
+            volunteerDTO.setLastName(booking.getVolunteer().getLastName());
+            volunteerDTO.setEmail(booking.getVolunteer().getEmail());
+            volunteerDTO.setDob(booking.getVolunteer().getDob());
+            volunteerDTO.setIsMale(booking.getVolunteer().getIsMale());
+            volunteerDTO.setMobileNo(booking.getVolunteer().getMobileNo());
+            volunteerDTO.setNationality(booking.getVolunteer().getNationality());
+            bookingDTO.setVolunteer(volunteerDTO);
+        }
 
-        PartnerDTO partnerDTO = new PartnerDTO();
-        partnerDTO.setPid(booking.getPartner().getPid());
-        partnerDTO.setPname(booking.getPartner().getPname());
-        bookingDTO.setPartner(partnerDTO);
+        if (booking.getPartner() != null) {
+            PartnerDTO partnerDTO = new PartnerDTO();
+            partnerDTO.setPid(booking.getPartner().getPid());
+            partnerDTO.setPname(booking.getPartner().getPname());
+            bookingDTO.setPartner(partnerDTO);
+        }
 
-        RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setRid(booking.getRoom().getRid());
-        roomDTO.setRname(booking.getRoom().getRname());
-        roomDTO.setCapacity(booking.getRoom().getCapacity());
-        bookingDTO.setRoom(roomDTO);
+        if (booking.getRoom() != null) {
+            RoomDTO roomDTO = new RoomDTO();
+            roomDTO.setRid(booking.getRoom().getRid());
+            roomDTO.setRname(booking.getRoom().getRname());
+            roomDTO.setCapacity(booking.getRoom().getCapacity());
+            bookingDTO.setRoom(roomDTO);
+        }
 
-        ProjectDTO projectDTO = new ProjectDTO();
-        projectDTO.setPrId(booking.getProject().getPrId());
-        projectDTO.setPrName(booking.getProject().getPrName());
-        bookingDTO.setProject(projectDTO);
+        if (booking.getPrivateHotel() != null) {
+            PrivateHotelDTO privateHotelDTO = new PrivateHotelDTO();
+            privateHotelDTO.setPhId(booking.getPrivateHotel().getPhId());
+            privateHotelDTO.setPhName(booking.getPrivateHotel().getPhName());
+            bookingDTO.setPrivateHotel(privateHotelDTO);
+        }
+
+        if (booking.getProject() != null) {
+            ProjectDTO projectDTO = new ProjectDTO();
+            projectDTO.setPrId(booking.getProject().getPrId());
+            projectDTO.setPrName(booking.getProject().getPrName());
+            bookingDTO.setProject(projectDTO);
+        }
 
         return bookingDTO;
     }

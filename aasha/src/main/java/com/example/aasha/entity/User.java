@@ -3,7 +3,7 @@ package com.example.aasha.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
+@Entity
 @Data
 @Table(name = "User")
 public class User {
@@ -16,5 +16,7 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
+    private String role;
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 public class ProjectDTO {
     private Long prId;
     private String prName;
+    private int capacity;
     private ProjectCategoryDTO projectCategory;
     private List<BookingDTO> bookings;
 }

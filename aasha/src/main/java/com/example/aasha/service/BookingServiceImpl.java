@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking getBookingById(Long id) {
         return bookingRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Booking not found with id " + id));
+                .orElseThrow(() -> new NoSuchElementException("Booking not found with id " + id));
     }
 
     @Override
@@ -75,6 +76,10 @@ public class BookingServiceImpl implements BookingService {
             existingBooking.setRoom(updatedBooking.getRoom());
         }
 
+        if (updatedBooking.getPrivateHotel() != null) {
+            existingBooking.setPrivateHotel(updatedBooking.getPrivateHotel());
+        }
+
         if (updatedBooking.getProject() != null) {
             existingBooking.setProject(updatedBooking.getProject());
         }
@@ -116,62 +121,50 @@ public class BookingServiceImpl implements BookingService {
         bookingDTO.setEndDate(booking.getEndDate());
         bookingDTO.setBookingStatus(booking.getBookingStatus());
 
-        VolunteerDTO volunteerDTO = new VolunteerDTO();
-        volunteerDTO.setId(booking.getVolunteer().getId());
-        volunteerDTO.setFirstName(booking.getVolunteer().getFirstName());
-        volunteerDTO.setLastName(booking.getVolunteer().getLastName());
-        volunteerDTO.setEmail(booking.getVolunteer().getEmail());
-        volunteerDTO.setDob(booking.getVolunteer().getDob());
-        volunteerDTO.setIsMale(booking.getVolunteer().getIsMale());
-        volunteerDTO.setMobileNo(booking.getVolunteer().getMobileNo());
-        volunteerDTO.setNationality(booking.getVolunteer().getNationality());
-        bookingDTO.setVolunteer(volunteerDTO);
+        if (booking.getVolunteer() != null) {
+            VolunteerDTO volunteerDTO = new VolunteerDTO();
+            volunteerDTO.setId(booking.getVolunteer().getId());
+            volunteerDTO.setFirstName(booking.getVolunteer().getFirstName());
+            volunteerDTO.setLastName(booking.getVolunteer().getLastName());
+            volunteerDTO.setEmail(booking.getVolunteer().getEmail());
+            volunteerDTO.setDob(booking.getVolunteer().getDob());
+            volunteerDTO.setIsMale(booking.getVolunteer().getIsMale());
+            volunteerDTO.setMobileNo(booking.getVolunteer().getMobileNo());
+            volunteerDTO.setNationality(booking.getVolunteer().getNationality());
+            bookingDTO.setVolunteer(volunteerDTO);
+        }
 
-        PartnerDTO partnerDTO = new PartnerDTO();
-        partnerDTO.setPid(booking.getPartner().getPid());
-        partnerDTO.setPname(booking.getPartner().getPname());
-        bookingDTO.setPartner(partnerDTO);
+        if (booking.getPartner() != null) {
+            PartnerDTO partnerDTO = new PartnerDTO();
+            partnerDTO.setPid(booking.getPartner().getPid());
+            partnerDTO.setPname(booking.getPartner().getPname());
+            bookingDTO.setPartner(partnerDTO);
+        }
 
-        RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setRid(booking.getRoom().getRid());
-        roomDTO.setRname(booking.getRoom().getRname());
-        roomDTO.setCapacity(booking.getRoom().getCapacity());
-        bookingDTO.setRoom(roomDTO);
+        if (booking.getRoom() != null) {
+            RoomDTO roomDTO = new RoomDTO();
+            roomDTO.setRid(booking.getRoom().getRid());
+            roomDTO.setRname(booking.getRoom().getRname());
+            roomDTO.setCapacity(booking.getRoom().getCapacity());
+            bookingDTO.setRoom(roomDTO);
+        }
 
-        ProjectDTO projectDTO = new ProjectDTO();
-        projectDTO.setPrId(booking.getProject().getPrId());
-        projectDTO.setPrName(booking.getProject().getPrName());
-        bookingDTO.setProject(projectDTO);
+        if (booking.getPrivateHotel() != null) {
+            PrivateHotelDTO privateHotelDTO = new PrivateHotelDTO();
+            privateHotelDTO.setPhId(booking.getPrivateHotel().getPhId());
+            privateHotelDTO.setPhName(booking.getPrivateHotel().getPhName());
+            bookingDTO.setPrivateHotel(privateHotelDTO);
+        }
 
-//        if (booking.getProjectBookings() != null && !booking.getProjectBookings().isEmpty()) {
-//            List<ProjectBookingDTO> projectBookingDTOs = booking.getProjectBookings().stream()
-//                    .map(this::convertProjectBookingToDTO)
-//                    .collect(Collectors.toList());
-//            bookingDTO.setProjectBookings(projectBookingDTOs);
-//        } else {
-//            bookingDTO.setProjectBookings(Collections.emptyList());
-//        }
+        if (booking.getProject() != null) {
+            ProjectDTO projectDTO = new ProjectDTO();
+            projectDTO.setPrId(booking.getProject().getPrId());
+            projectDTO.setPrName(booking.getProject().getPrName());
+            bookingDTO.setProject(projectDTO);
+        }
 
         return bookingDTO;
     }
 
-//    private ProjectBookingDTO convertProjectBookingToDTO(ProjectBooking projectBooking) {
-//        ProjectBookingDTO projectBookingDTO = new ProjectBookingDTO();
-//        projectBookingDTO.setPbId(projectBooking.getPbId());
-//        projectBookingDTO.setStartDate(projectBooking.getPstartDate());
-//        projectBookingDTO.setEndDate(projectBooking.getPendDate());
-//
-//        ProjectDTO projectDTO = new ProjectDTO();
-//        projectDTO.setPrId(projectBooking.getProject().getPrId());
-//        projectDTO.setPrName(projectBooking.getProject().getPrName());
-//
-////        ProjectCategoryDTO projectCategoryDTO = new ProjectCategoryDTO();
-////        projectCategoryDTO.setPcId(projectBooking.getProject().getProjectCategory().getPcId());
-////        projectCategoryDTO.setCategoryName(projectBooking.getProject().getProjectCategory().getCategoryName());
-////        projectDTO.setProjectCategory(projectCategoryDTO);
-//
-//        projectBookingDTO.setProject(projectDTO);
-//        return projectBookingDTO;
-//    }
 }
 

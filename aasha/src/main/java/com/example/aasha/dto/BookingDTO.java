@@ -20,6 +20,7 @@ public class BookingDTO {
     private VolunteerDTO volunteer;
     private PartnerDTO partner;
     private RoomDTO room;
+    private PrivateHotelDTO privateHotel;
     private ProjectDTO project;
 
 }

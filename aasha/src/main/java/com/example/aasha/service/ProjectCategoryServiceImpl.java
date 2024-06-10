@@ -1,13 +1,18 @@
 package com.example.aasha.service;
 
+import com.example.aasha.dto.BookingDTO;
 import com.example.aasha.dto.ProjectCategoryDTO;
+import com.example.aasha.dto.ProjectDTO;
+import com.example.aasha.entity.Project;
 import com.example.aasha.entity.ProjectCategory;
 import com.example.aasha.repo.ProjectCategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectCategoryServiceImpl implements ProjectCategoryService{
@@ -52,6 +57,26 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService{
         ProjectCategoryDTO projectCategoryDTO = new ProjectCategoryDTO();
         projectCategoryDTO.setPcId(projectCategory.getPcId());
         projectCategoryDTO.setPcName(projectCategory.getPcName());
+
+        List<ProjectDTO> projectDTOS = projectCategory.getProjectList() != null ?
+                projectCategory.getProjectList().stream()
+                        .map(project -> convertToDTO(project))
+                        .collect(Collectors.toList()) : new ArrayList<>();
+        projectCategoryDTO.setProjectList(projectDTOS);
+
         return projectCategoryDTO;
+    }
+
+    public ProjectDTO convertToDTO(Project project) {
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setPrId(project.getPrId());
+        projectDTO.setPrName(project.getPrName());
+
+        ProjectCategoryDTO projectCategoryDTO = new ProjectCategoryDTO();
+        projectCategoryDTO.setPcId(project.getProjectCategory().getPcId());
+        projectCategoryDTO.setPcName(project.getProjectCategory().getPcName());
+        projectDTO.setProjectCategory(projectCategoryDTO);
+
+        return projectDTO;
     }
 }
